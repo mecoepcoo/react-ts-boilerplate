@@ -34,6 +34,12 @@
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.1.0",
     "husky": "^3.0.4"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   }
 }
