@@ -7,8 +7,8 @@
     "react-dom": "^16.9.0"
   },
   "scripts": {
-    "dev": "webpack-dev-server --config ./config/webpack.dev.js",
-    "build": "webpack  --config  ./config/webpack.prod.js"
+    "dev": "webpack-dev-server --config ./config/webpack.dev.js --mode development",
+    "build": "webpack  --config  ./config/webpack.base.js --mode production"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -22,14 +22,26 @@
     "Android > 4.4"
   ],
   "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
     "@commitlint/cli": "^8.1.0",
     "@types/jest": "24.0.18",
     "@types/node": "12.7.2",
     "@types/react": "16.9.2",
     "@types/react-dom": "16.9.0",
+    "babel-loader": "^8.0.6",
     "cross-env": "^5.2.0",
+    "css-loader": "^3.2.0",
+    "html-loader": "^0.5.5",
     "husky": "^3.0.4",
-    "typescript": "3.5.3"
+    "style-loader": "^1.0.0",
+    "typescript": "3.5.3",
+    "url-loader": "^2.1.0",
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.8.0",
+    "webpack-merge": "^4.2.1"
   },
   "husky": {
     "hooks": {
