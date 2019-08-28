@@ -28,7 +28,11 @@ module.exports = merge.smart(baseWebpackConfig, {
               {
                 loader: 'css-loader'
               },
-              'postcss-loader'
+              'postcss-loader',
+              {
+                loader: 'less-loader',
+                options: { javascriptEnabled: true }
+              }
             ]
           },
           {

@@ -30,8 +30,11 @@ module.exports = {
                 options: {
                   presets: [
                     '@babel/preset-react',  // jsx支持
-                    ['@babel/preset-env', { useBuiltIns: 'usage', corejs: 2 }],
-                  ]
+                    ['@babel/preset-env', { useBuiltIns: 'usage', corejs: 2 }], // 按需使用polyfill
+                    ['@babel/plugin-proposal-class-properties', { 'loose': true }]
+                  ],
+                  sourceMaps: true,
+                  cacheDirectory: true
                 }
               }
             ]
@@ -46,7 +49,11 @@ module.exports = {
                   modules: false
                 }
               },
-              'postcss-loader'
+              'postcss-loader',
+              {
+                loader: 'less-loader',
+                options: { javascriptEnabled: true }
+              }
             ]
           },
           {
@@ -70,7 +77,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: [".js", ".json", ".jsx"]
+    extensions: ['.js', '.json', '.jsx']
   },
   plugins: [
     new HtmlWebpackPlugin({
