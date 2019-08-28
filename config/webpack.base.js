@@ -29,8 +29,8 @@ module.exports = {
                 loader: 'babel-loader',
                 options: {
                   presets: [
-                    '@babel/preset-env',
                     '@babel/preset-react',  // jsx支持
+                    ['@babel/preset-env', { useBuiltIns: 'usage', corejs: 2 }],
                   ]
                 }
               }
@@ -40,7 +40,12 @@ module.exports = {
             test: /\.(less|css)$/,
             use: [
               { loader: 'style-loader' },
-              { loader: 'css-loader' },
+              {
+                loader: 'css-loader',
+                options: {
+                  modules: false
+                }
+              },
             ]
           },
           {
@@ -49,6 +54,14 @@ module.exports = {
             options: {
               limit: 8 * 1024,
               name: '[name].[hash:8].[ext]',
+            }
+          },
+          {
+            exclude: [/\.(js|mjs|ts|tsx|less|css|jsx)$/, /\.html$/, /\.json$/],
+            loader: 'file-loader',
+            options: {
+              name: '[path][name].[hash:8].[ext]',
+              outputPath: 'static'
             }
           }
         ]
