@@ -29,9 +29,12 @@ module.exports = {
                 loader: 'babel-loader',
                 options: {
                   presets: [
-                    '@babel/preset-env',
                     '@babel/preset-react',  // jsx支持
-                  ]
+                    ['@babel/preset-env', { useBuiltIns: 'usage', corejs: 2 }], // 按需使用polyfill
+                    ['@babel/plugin-proposal-class-properties', { 'loose': true }]
+                  ],
+                  sourceMaps: true,
+                  cacheDirectory: true
                 }
               }
             ]
@@ -40,7 +43,17 @@ module.exports = {
             test: /\.(less|css)$/,
             use: [
               { loader: 'style-loader' },
-              { loader: 'css-loader' },
+              {
+                loader: 'css-loader',
+                options: {
+                  modules: false
+                }
+              },
+              'postcss-loader',
+              {
+                loader: 'less-loader',
+                options: { javascriptEnabled: true }
+              }
             ]
           },
           {
@@ -50,13 +63,21 @@ module.exports = {
               limit: 8 * 1024,
               name: '[name].[hash:8].[ext]',
             }
+          },
+          {
+            exclude: [/\.(js|mjs|ts|tsx|less|css|jsx)$/, /\.html$/, /\.json$/],
+            loader: 'file-loader',
+            options: {
+              name: '[path][name].[hash:8].[ext]',
+              outputPath: 'static'
+            }
           }
         ]
       }
     ]
   },
   resolve: {
-    extensions: [".js", ".json", ".jsx"]
+    extensions: ['.js', '.json', '.jsx']
   },
   plugins: [
     new HtmlWebpackPlugin({
