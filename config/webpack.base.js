@@ -1,17 +1,35 @@
 const path = require('path');
+const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const config = require('./config');
+const argv = require('yargs').argv;
 
-const DIST_PATH = path.resolve(__dirname, '../dist');
+const APP_PATH = path.resolve(__dirname, '../src');
 
-module.exports = {
+const bundleAnalyzerReport = argv.report;
+
+const webpackConfig = {
+  plugins: []
+};
+if (bundleAnalyzerReport) {
+  webpackConfig.plugins.push(new BundleAnalyzerPlugin({
+    analyzerMode: 'static',
+    openAnalyzer: false,
+    reportFilename: path.join(config.assetsRoot, './report.html')
+  }));
+}
+
+module.exports = merge(webpackConfig, {
   entry: {
     app: './src/index.js',
     vendor: ['react', 'react-dom'] // 不变的代码分包
   },
   output: {
     filename: 'js/[name].bundle.js',
-    path: DIST_PATH
+    path: config.assetsRoot,
+    publicPath: config.publicPath
   },
   module: {
     rules: [
@@ -23,18 +41,20 @@ module.exports = {
           },
           {
             test: /\.(js|mjs|jsx|ts|tsx)$/,
-            include: path.resolve(__dirname, '../src'),
+            include: APP_PATH,
             use: [
               {
                 loader: 'babel-loader',
                 options: {
                   presets: [
                     '@babel/preset-react',  // jsx支持
-                    ['@babel/preset-env', { useBuiltIns: 'usage', corejs: 2 }], // 按需使用polyfill
-                    ['@babel/plugin-proposal-class-properties', { 'loose': true }]
+                    ['@babel/preset-env', { useBuiltIns: 'usage', corejs: 2 }] // 按需使用polyfill
+                  ],
+                  plugins: [
+                    ['@babel/plugin-proposal-class-properties', { 'loose': true }] // class中的箭头函数中的this指向组件
                   ],
                   sourceMaps: true,
-                  cacheDirectory: true
+                  cacheDirectory: true // 加快编译速度
                 }
               }
             ]
@@ -62,6 +82,8 @@ module.exports = {
             options: {
               limit: 8 * 1024,
               name: '[name].[hash:8].[ext]',
+              outputPath: config.assetsDirectory,
+              publicPath: config.assetsRoot
             }
           },
           {
@@ -69,7 +91,8 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: '[path][name].[hash:8].[ext]',
-              outputPath: 'static'
+              outputPath: config.assetsDirectory,
+              publicPath: config.assetsRoot
             }
           }
         ]
@@ -81,7 +104,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'public/index.html',
+      template: config.indexPath,
     }),
     // 清理打包目录
     new CleanWebpackPlugin(),
@@ -100,4 +123,4 @@ module.exports = {
       }
     },
   }
-};
+});

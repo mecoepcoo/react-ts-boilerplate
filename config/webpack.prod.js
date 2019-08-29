@@ -6,32 +6,38 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const config = require('./config');
 
-const DIST_PATH = path.resolve(__dirname, '../dist');
-
-const productionGzipExtensions = ['js', 'css']
+const productionGzipExtensions = ['js', 'css'];
 
 module.exports = merge.smart(baseWebpackConfig, {
   mode: 'production',
   output: {
     filename: 'js/[name].[contenthash:8].js',
-    path: DIST_PATH
   },
   module: {
     rules: [
       {
         oneOf: [
           {
+            loader: 'babel-loader',
+            options: {
+              sourceMaps: config.productionJsSourceMap,
+            }
+          },
+          {
             test: /\.(less|css)$/,
             use: [
               MiniCssExtractPlugin.loader,
               {
-                loader: 'css-loader'
+                loader: 'css-loader',
               },
               'postcss-loader',
               {
                 loader: 'less-loader',
-                options: { javascriptEnabled: true }
+                options: {
+                  javascriptEnabled: true,
+                }
               }
             ]
           },
@@ -41,7 +47,8 @@ module.exports = merge.smart(baseWebpackConfig, {
             options: {
               limit: 8 * 1024,
               name: '[name].[contenthash:8].[ext]',
-              outputPath: 'images'
+              outputPath: config.assetsDirectory,
+              publicPath: config.assetsRoot
             }
           },
           {
@@ -49,7 +56,8 @@ module.exports = merge.smart(baseWebpackConfig, {
             loader: 'file-loader',
             options: {
               name: '[path][name].[contenthash:8].[ext]',
-              outputPath: 'static'
+              outputPath: config.assetsDirectory,
+              publicPath: config.assetsRoot
             }
           }
         ]
@@ -59,7 +67,7 @@ module.exports = merge.smart(baseWebpackConfig, {
   plugins: [
     // 处理html
     new HtmlWebpackPlugin({
-      template: 'public/index.html',
+      template: config.indexPath,
       minify: {
         removeComments: true,
         collapseWhitespace: true,

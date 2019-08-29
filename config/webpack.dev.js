@@ -3,11 +3,13 @@ const merge = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.base');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const config = require('./config');
 
 module.exports = merge.smart(baseWebpackConfig, {
   mode: 'development',
   output: {
     filename: 'js/[name].[hash:8].js',
+    publicPath: config.publicPath
   },
   module: {
     rules: [
@@ -18,7 +20,7 @@ module.exports = merge.smart(baseWebpackConfig, {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'public/index.html',
+      template: config.indexPath,
       minify: {
         html5: true
       },
@@ -27,17 +29,6 @@ module.exports = merge.smart(baseWebpackConfig, {
     new webpack.HotModuleReplacementPlugin()
   ],
   devServer: {
-    port: 8080,
-    host: 'localhost',
-    contentBase: path.join(__dirname, '../public'),
-    watchContentBase: true,
-    publicPath: '/',
-    compress: true,
-    historyApiFallback: true,
-    hot: true,
-    quiet: true,
-    clientLogLevel: 'none',
-    open: true,
-    proxy: {}
+    ...config.devServer
   }
 });
