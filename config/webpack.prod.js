@@ -38,7 +38,11 @@ module.exports = merge.smart(baseWebpackConfig, {
             ]
           },
           {
-            test: /\.(jpg|jpeg|bmp|svg|png|webp|gif)$/,
+            test: /\.svg$/,
+            use: ['@svgr/webpack']
+          },
+          {
+            test: /\.(jpg|jpeg|bmp|png|webp|gif)$/,
             loader: 'url-loader',
             options: {
               limit: 8 * 1024,

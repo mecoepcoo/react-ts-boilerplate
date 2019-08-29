@@ -24,7 +24,7 @@ if (bundleAnalyzerReport) {
 module.exports = merge(webpackConfig, {
   devtool: 'cheap-module-eval-source-map',
   entry: {
-    app: './src/index.js',
+    app: './src/index.tsx',
     vendor: ['react', 'react-dom'] // 不变的代码分包
   },
   output: {
@@ -57,7 +57,8 @@ module.exports = merge(webpackConfig, {
                   ],
                   cacheDirectory: true // 加快编译速度
                 }
-              }
+              },
+              { loader: 'awesome-typescript-loader' }
             ]
           },
           {
@@ -78,7 +79,11 @@ module.exports = merge(webpackConfig, {
             ]
           },
           {
-            test: /\.(jpg|jpeg|bmp|svg|png|webp|gif)$/,
+            test: /\.svg$/,
+            use: ['@svgr/webpack']
+          },
+          {
+            test: /\.(jpg|jpeg|bmp|png|webp|gif)$/,
             loader: 'url-loader',
             options: {
               limit: 8 * 1024,
@@ -101,7 +106,7 @@ module.exports = merge(webpackConfig, {
     ]
   },
   resolve: {
-    extensions: ['.js', '.json', '.jsx']
+    extensions: ['.js', '.json', '.jsx', '.ts', '.tsx']
   },
   plugins: [
     new HtmlWebpackPlugin({
