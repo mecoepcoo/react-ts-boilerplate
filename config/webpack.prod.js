@@ -9,9 +9,11 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const config = require('./config');
 
 const productionGzipExtensions = ['js', 'css'];
+const sourceMapsMode = config.productionJsSourceMap ? 'source-map' : 'none';
 
 module.exports = merge.smart(baseWebpackConfig, {
   mode: 'production',
+  devtool: sourceMapsMode,
   output: {
     filename: 'js/[name].[contenthash:8].js',
   },
@@ -19,12 +21,6 @@ module.exports = merge.smart(baseWebpackConfig, {
     rules: [
       {
         oneOf: [
-          {
-            loader: 'babel-loader',
-            options: {
-              sourceMaps: config.productionJsSourceMap,
-            }
-          },
           {
             test: /\.(less|css)$/,
             use: [

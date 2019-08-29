@@ -22,6 +22,7 @@ if (bundleAnalyzerReport) {
 }
 
 module.exports = merge(webpackConfig, {
+  devtool: 'cheap-module-eval-source-map',
   entry: {
     app: './src/index.js',
     vendor: ['react', 'react-dom'] // 不变的代码分包
@@ -40,7 +41,7 @@ module.exports = merge(webpackConfig, {
             loader: 'html-loader'
           },
           {
-            test: /\.(js|mjs|jsx|ts|tsx)$/,
+            test: /\.(j|t)sx?$/,
             include: APP_PATH,
             use: [
               {
@@ -51,9 +52,9 @@ module.exports = merge(webpackConfig, {
                     ['@babel/preset-env', { useBuiltIns: 'usage', corejs: 2 }] // 按需使用polyfill
                   ],
                   plugins: [
+                    '@babel/plugin-syntax-dynamic-import',
                     ['@babel/plugin-proposal-class-properties', { 'loose': true }] // class中的箭头函数中的this指向组件
                   ],
-                  sourceMaps: true,
                   cacheDirectory: true // 加快编译速度
                 }
               }
