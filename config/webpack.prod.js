@@ -2,14 +2,18 @@ const path = require('path');
 const merge = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.base');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const InterpolateHtmlPlugin = require('interpolate-html-plugin');
+const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const config = require('./config');
+const getClientEnvironment = require('./env');
 
 const productionGzipExtensions = ['js', 'css'];
 const sourceMapsMode = config.productionJsSourceMap ? 'source-map' : 'none';
+const env = getClientEnvironment(config.publicPath);
 
 module.exports = merge.smart(baseWebpackConfig, {
   mode: 'production',
@@ -46,7 +50,7 @@ module.exports = merge.smart(baseWebpackConfig, {
             loader: 'url-loader',
             options: {
               limit: 8 * 1024,
-              name: '[name].[contenthash:8].[ext]',
+              name: 'img/[name].[contenthash:8].[ext]',
               outputPath: config.assetsDirectory,
               publicPath: config.assetsRoot
             }
@@ -55,7 +59,7 @@ module.exports = merge.smart(baseWebpackConfig, {
             exclude: [/\.(js|mjs|ts|tsx|less|css|jsx)$/, /\.html$/, /\.json$/],
             loader: 'file-loader',
             options: {
-              name: '[path][name].[contenthash:8].[ext]',
+              name: 'media/[path][name].[contenthash:8].[ext]',
               outputPath: config.assetsDirectory,
               publicPath: config.assetsRoot
             }
@@ -65,6 +69,8 @@ module.exports = merge.smart(baseWebpackConfig, {
     ]
   },
   plugins: [
+    // 清理打包目录
+    new CleanWebpackPlugin(),
     // 处理html
     new HtmlWebpackPlugin({
       template: config.indexPath,
@@ -73,18 +79,22 @@ module.exports = merge.smart(baseWebpackConfig, {
         collapseWhitespace: true,
         removeRedundantAttributes: true,
         useShortDoctype: true,
+        removeOptionalTags: false,
         removeEmptyAttributes: true,
         removeStyleLinkTypeAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        removeAttributeQuotes: true,
+        removeCommentsFromCDATA: true,
         keepClosingSlash: true,
         minifyJS: true,
         minifyCSS: true,
         minifyURLs: true,
       }
     }),
-    // 清理打包目录
-    new CleanWebpackPlugin(),
+    new InterpolateHtmlPlugin(env.raw),
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash:8].css'
+      filename: 'css/[name].[contenthash:8].css'
       // chunkFilename: '[name].[contenthash:8].chunk.css'
     }),
     new CompressionWebpackPlugin({
@@ -93,12 +103,31 @@ module.exports = merge.smart(baseWebpackConfig, {
       test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
       threshold: 10240,
       minRatio: 0.8
-    })
+    }),
   ],
   optimization: {
+    splitChunks: {
+      chunks: 'all',
+      minChunks: 2,
+      maxInitialRequests: 5,
+      cacheGroups: {
+        // 提取公共模块
+        commons: {
+          chunks: 'all',
+          test: /[\\/]node_modules[\\/]/,
+          minChunks: 2,
+          maxInitialRequests: 5,
+          minSize: 0,
+          name: 'common'
+        }
+      }
+    },
     minimizer: [
       new OptimizeCSSAssetsPlugin({
         cssProcessorOptions: true ? { map: { inline: false }} : {}
+      }),
+      new UglifyjsWebpackPlugin({
+        sourceMap: config.productionJsSourceMap
       })
     ]
   }

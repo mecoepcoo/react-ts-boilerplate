@@ -2,6 +2,8 @@ import React from 'react';
 import Logo from './logo.svg';
 import './App.less';
 
+console.log(process.env.REACT_APP_ENV)
+
 const App: React.FC = () => {
   return (
     <div className="App">

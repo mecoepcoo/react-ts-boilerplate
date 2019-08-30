@@ -1,14 +1,19 @@
 const path = require('path');
+const argv = require('yargs').argv;
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const InterpolateHtmlPlugin = require('interpolate-html-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const config = require('./config');
-const argv = require('yargs').argv;
+const getClientEnvironment = require('./env');
 
 const APP_PATH = path.resolve(__dirname, '../src');
 
 const bundleAnalyzerReport = argv.report;
+const env = getClientEnvironment(config.publicPath);
 
 const webpackConfig = {
   plugins: []
@@ -87,7 +92,7 @@ module.exports = merge(webpackConfig, {
             loader: 'url-loader',
             options: {
               limit: 8 * 1024,
-              name: '[name].[hash:8].[ext]',
+              name: 'img/[name].[hash:8].[ext]',
               outputPath: config.assetsDirectory,
               publicPath: config.assetsRoot
             }
@@ -96,7 +101,7 @@ module.exports = merge(webpackConfig, {
             exclude: [/\.(js|mjs|ts|tsx|less|css|jsx)$/, /\.html$/, /\.json$/],
             loader: 'file-loader',
             options: {
-              name: '[path][name].[hash:8].[ext]',
+              name: 'media/[path][name].[hash:8].[ext]',
               outputPath: config.assetsDirectory,
               publicPath: config.assetsRoot
             }
@@ -109,24 +114,26 @@ module.exports = merge(webpackConfig, {
     extensions: ['.js', '.json', '.jsx', '.ts', '.tsx']
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: config.indexPath,
-    }),
     // 清理打包目录
     new CleanWebpackPlugin(),
-  ],
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        // 提取公共模块
-        commons: {
-          chunks: 'all',
-          minChunks: 2,
-          maxInitialRequests: 5,
-          minSize: 0,
-          name: 'common'
-        }
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: config.indexPath,
+      showErrors: true
+    }),
+    // 在html模板中能够使用环境变量
+    // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    new InterpolateHtmlPlugin(env.raw),
+    // 在js代码中能够使用环境变量(demo: process.env.NODE_ENV === 'production')
+    new webpack.DefinePlugin(env.stringified),
+    // 忽略moment的国际化库
+    // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+    new CopyWebpackPlugin([
+      {
+        from: 'public',
+        ignore: ['index.html']
       }
-    },
-  }
+    ])
+  ],
+  optimization: {}
 });
