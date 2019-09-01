@@ -1,26 +1,27 @@
 module.exports = {
   "root": true,
   "env": {
-    "node": true
+    "browser": true,
+    "node": true,
+    "es6": true,
+    // "jquery": true
+    "jest": true,
+    "jsx-control-statements/jsx-control-statements": true
   },
-  "extends": [
-    "react-app",
-  ],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "parser": "babel-eslint"
+    "sourceType": 'module'
   },
   "globals": {
-    "wx": true,
-    "$": true,
+    // "wx": "readonly",
   },
-  "overrides": [
-    {
-      "files": ["*.ts", "*.tsx"],
-      "parser": "typescript-eslint-parser",
-      "plugins": ["typescript"],
-      "rules": {
-        "no-unused-vars": "off"
-      }
-    }
-  ]
-}
+  "extends": [
+    "plugin:jsx-control-statements/recommended",
+    "prettier"
+  ],
+  "plugins": ["@typescript-eslint", "react", "jsx-control-statements", "prettier"],
+  "rules": {
+    "prettier/prettier": 2,
+    "no-unused-vars": 0
+  }
+};
