@@ -48,6 +48,7 @@ module.exports = merge(webpackConfig, {
         options: {
           emitWarning: true,
           emitError: true,
+          fix: true // 是否自动修复
         }
       },
       {

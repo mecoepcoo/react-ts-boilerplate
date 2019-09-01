@@ -16,10 +16,12 @@ module.exports = {
     // "wx": "readonly",
   },
   "extends": [
-    "plugin:jsx-control-statements/recommended"
+    "plugin:jsx-control-statements/recommended",
+    "prettier"
   ],
-  "plugins": ["@typescript-eslint", "react", "jsx-control-statements"],
+  "plugins": ["@typescript-eslint", "react", "jsx-control-statements", "prettier"],
   "rules": {
-    "no-unused-vars": 2
+    "prettier/prettier": 2,
+    "no-unused-vars": 0
   }
 };

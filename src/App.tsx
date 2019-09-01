@@ -1,9 +1,6 @@
-import React from 'react';
-import Logo from './logo.svg';
-import './App.less';
-
-let a =123; 
-let b =123; 
+import React from "react";
+import Logo from "./logo.svg";
+import "./App.less";
 
 const App: React.FC = () => {
   return (
@@ -24,6 +21,6 @@ const App: React.FC = () => {
       </header>
     </div>
   );
-}
+};
 
 export default App;
