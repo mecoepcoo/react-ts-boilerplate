@@ -16,9 +16,14 @@ module.exports = {
     compress: true,
     historyApiFallback: true,
     hot: true,
-    quiet: true,
-    clientLogLevel: 'none',
+    clientLogLevel: 'error',
     open: true,
+    overlay: false,
+    quiet: false,
+    noInfo: true,
+    watchOptions: {
+      ignored: /node_modules/
+    },
     proxy: {}
   }
 };

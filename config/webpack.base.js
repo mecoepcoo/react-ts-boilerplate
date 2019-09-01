@@ -40,6 +40,17 @@ module.exports = merge(webpackConfig, {
   module: {
     rules: [
       {
+        enforce: 'pre',
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        include: [APP_PATH],
+        loader: 'eslint-loader',
+        options: {
+          emitWarning: true,
+          emitError: true,
+        }
+      },
+      {
         oneOf: [
           {
             test: /\.(html)$/,
@@ -63,7 +74,12 @@ module.exports = merge(webpackConfig, {
                   cacheDirectory: true // 加快编译速度
                 }
               },
-              { loader: 'awesome-typescript-loader' }
+              {
+                loader: 'awesome-typescript-loader',
+                options: {
+                  silent: true
+                }
+              }
             ]
           },
           {

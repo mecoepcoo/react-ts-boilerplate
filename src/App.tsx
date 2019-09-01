@@ -2,7 +2,8 @@ import React from 'react';
 import Logo from './logo.svg';
 import './App.less';
 
-console.log(process.env.REACT_APP_ENV)
+let a =123; 
+let b =123; 
 
 const App: React.FC = () => {
   return (
