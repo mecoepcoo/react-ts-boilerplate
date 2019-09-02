@@ -37,12 +37,14 @@ module.exports = merge.smart(baseWebpackConfig, {
     ...config.devServer
   },
   stats: {
+    colors: true,
     children: false,
     chunks: false,
     chunkModules: false,
     modules: false,
     builtAt: false,
     entrypoints: false,
-    assets: false
+    assets: false,
+    version: false
   }
 });
