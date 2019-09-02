@@ -10,7 +10,11 @@ module.exports = {
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "sourceType": 'module'
+    "sourceType": 'module',
+    "ecmaFeatures": {
+      "jsx": true,
+      "experimentalObjectRestSpread": true
+    }
   },
   "globals": {
     // "wx": "readonly",
@@ -22,6 +26,7 @@ module.exports = {
   "plugins": ["@typescript-eslint", "react", "jsx-control-statements", "prettier"],
   "rules": {
     "prettier/prettier": 2,
+    "quotes": ['error', 'single'],
     "no-unused-vars": 0
   }
 };
