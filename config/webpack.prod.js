@@ -6,6 +6,7 @@ const InterpolateHtmlPlugin = require('interpolate-html-plugin');
 const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const PreloadWebpackPlugin = require('preload-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const config = require('./config');
@@ -71,6 +72,17 @@ module.exports = merge.smart(baseWebpackConfig, {
   plugins: [
     // 清理打包目录
     new CleanWebpackPlugin(),
+    new PreloadWebpackPlugin({
+      rel: 'preload',
+      as(entry) {
+        if (/\.css$/.test(entry)) return 'style';
+        if (/\.woff$/.test(entry)) return 'font';
+        if (/\.png$/.test(entry)) return 'image';
+        return 'script';
+      },
+      include: ['app']
+      // include:'allChunks'
+    }),
     // 处理html
     new HtmlWebpackPlugin({
       template: config.indexPath,
@@ -128,7 +140,8 @@ module.exports = merge.smart(baseWebpackConfig, {
       }),
       new UglifyjsWebpackPlugin({
         sourceMap: config.productionJsSourceMap
-      })
+      }),
+      
     ]
   }
 });
