@@ -69,7 +69,6 @@
     "postcss-loader": "^3.0.0",
     "postcss-px-to-viewport": "^1.1.1",
     "postcss-write-svg": "^3.0.1",
-    "pre-commit": "^1.2.2",
     "prettier": "^1.18.2",
     "style-loader": "^1.0.0",
     "typescript": "^3.5.3",
