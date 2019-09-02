@@ -1,6 +1,6 @@
-import React from "react";
-import Logo from "./logo.svg";
-import "./App.less";
+import React from 'react';
+import Logo from './logo.svg';
+import './App.less';
 
 const App: React.FC = () => {
   return (
@@ -10,12 +10,7 @@ const App: React.FC = () => {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
           Learn React
         </a>
       </header>

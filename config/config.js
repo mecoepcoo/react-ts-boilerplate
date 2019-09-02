@@ -20,7 +20,7 @@ module.exports = {
     open: true,
     overlay: false,
     quiet: false,
-    noInfo: true,
+    noInfo: false,
     watchOptions: {
       ignored: /node_modules/
     },
