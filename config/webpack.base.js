@@ -128,7 +128,10 @@ module.exports = merge(webpackConfig, {
     ]
   },
   resolve: {
-    extensions: ['.js', '.json', '.jsx', '.ts', '.tsx']
+    extensions: ['.js', '.json', '.jsx', '.ts', '.tsx'],
+    alias: {
+      '@': path.resolve(__dirname, '../src/')
+    }
   },
   plugins: [
     // 清理打包目录
