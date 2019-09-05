@@ -6,21 +6,23 @@ export const routes = [
   {
     path: '/',
     exact: true,
-    component: loadable(() => import('@/pages/demo/HelloWorldDemo/HelloWorldDemoPage'))
+    component: loadable(() => import('@/pages/demo/HelloWorldDemo/HelloWorldDemoPage')),
+    name: 'home',
+    title: 'react-home'
   },
   {
     path: '/home',
     exact: true,
-    component: loadable(() => import('@/pages/demo/HelloWorldDemo/HelloWorldDemoPage'))
+    component: loadable(() => import('@/pages/demo/HelloWorldDemo/HelloWorldDemoPage')),
+    name: 'home',
+    title: 'HelloWorld'
   },
   // 404 Not Found
   {
     path: '*',
     exact: true,
-    component: loadable(() => import('@/pages/demo/HelloWorldDemo/HelloWorldDemoPage'))
+    component: loadable(() => import('@/pages/demo/HelloWorldDemo/HelloWorldDemoPage')),
+    name: '404',
+    title: '404'
   }
 ];
-
-function _setTitle(title: string) {
-  document.title = title;
-}
