@@ -26,3 +26,7 @@ export const routes = [
     title: '404'
   }
 ];
+
+export function beforeRouter(route: any) {
+  /* do something... */
+}

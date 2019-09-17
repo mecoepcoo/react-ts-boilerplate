@@ -1,13 +1,10 @@
 import React from 'react';
 import { Routes } from '@/interfaces/router/Router';
-import { useDocTitle } from '@/utils/hooks/useDocTitle';
 
 import Logo from './react-logo.svg';
 import './HelloWorldDemoPage.less';
 
 const HelloWorldDemoPage: React.FC<Routes> = (routes: Routes) => {
-  const { route } = routes;
-  useDocTitle(route.title);
   return (
     <div className="App">
       <header className="App-header">
