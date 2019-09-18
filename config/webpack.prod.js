@@ -3,7 +3,7 @@ const merge = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.base');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require('interpolate-html-plugin');
-const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PreloadWebpackPlugin = require('preload-webpack-plugin')
@@ -138,10 +138,9 @@ module.exports = merge.smart(baseWebpackConfig, {
       new OptimizeCSSAssetsPlugin({
         cssProcessorOptions: true ? { map: { inline: false }} : {}
       }),
-      new UglifyjsWebpackPlugin({
+      new TerserPlugin({
         sourceMap: config.productionJsSourceMap
-      }),
-      
+      })
     ]
   }
 });
