@@ -4,12 +4,13 @@ const baseWebpackConfig = require('./webpack.base');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require('interpolate-html-plugin');
 const webpack = require('webpack');
+const portfinder = require('portfinder');
 const config = require('./config');
 const getClientEnvironment = require('./env');
 
 const env = getClientEnvironment(config.publicPath);
 
-module.exports = merge.smart(baseWebpackConfig, {
+const devWebpackConfig = merge.smart(baseWebpackConfig, {
   mode: 'development',
   output: {
     filename: 'js/[name].[hash:8].js',
@@ -47,4 +48,16 @@ module.exports = merge.smart(baseWebpackConfig, {
     assets: false,
     version: false
   }
+});
+
+module.exports = new Promise((resolve, reject) => {
+  // 搜寻可用的端口号
+  portfinder.basePort = config.devServer.port;
+  portfinder.getPort((err, port) => {
+    if (err) reject(err)
+    else {
+      devWebpackConfig.devServer.port = port;
+    }
+    resolve(devWebpackConfig)
+  })
 });
