@@ -1,5 +1,5 @@
 {
-  "name": "ts-react-boilerplate",
+  "name": "react-ts-boilerplate",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -76,6 +76,7 @@
     "mockjs": "^1.0.1-beta3",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "ora": "^3.4.0",
+    "portfinder": "^1.0.25",
     "postcss-aspect-ratio-mini": "^1.0.1",
     "postcss-loader": "^3.0.0",
     "postcss-px-to-viewport": "^1.1.1",
