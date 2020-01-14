@@ -1,6 +1,6 @@
-import loadable from '@loadable/component';
+import loadable from '@loadable/component'
 
-export const basename = '';
+export const basename = ''
 
 export const routes = [
   {
@@ -25,8 +25,4 @@ export const routes = [
     name: '404',
     title: '404'
   }
-];
-
-export function beforeRouter(route: any) {
-  /* do something... */
-}
+]

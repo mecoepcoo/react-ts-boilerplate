@@ -1,3 +1,3 @@
 export type ObjLike = {
-  [props: string]: any;
-};
+  [props: string]: any
+}

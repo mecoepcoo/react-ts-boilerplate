@@ -1,8 +1,8 @@
-import React from 'react';
-import { Routes } from '@/interfaces/router/Router';
+import React from 'react'
+import { Routes } from '@/interfaces/router/Router'
 
-import Logo from './react-logo.svg';
-import './HelloWorldDemoPage.less';
+import Logo from './react-logo.svg'
+import './HelloWorldDemoPage.less'
 
 const HelloWorldDemoPage: React.FC<Routes> = (routes: Routes) => {
   return (
@@ -17,7 +17,7 @@ const HelloWorldDemoPage: React.FC<Routes> = (routes: Routes) => {
         </a>
       </header>
     </div>
-  );
-};
+  )
+}
 
-export default HelloWorldDemoPage;
+export default HelloWorldDemoPage

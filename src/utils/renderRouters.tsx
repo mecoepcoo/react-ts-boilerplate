@@ -1,6 +1,6 @@
-import React from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
-import { beforeRouter } from '@/router';
+import React from 'react'
+import { Route, Redirect, Switch } from 'react-router-dom'
+import { beforeRouter } from '@/router/guard'
 
 const renderRoutes = (routes: any, authed: boolean, authPath = '/login', extraProps = {}, switchProps = {}) =>
   routes ? (
@@ -11,18 +11,18 @@ const renderRoutes = (routes: any, authed: boolean, authPath = '/login', extraPr
           path={route.path}
           exact={route.exact}
           strict={route.strict}
-          render={props => {
-            document.title = route.title || 'react-app';
-            beforeRouter(route);
+          render={(props) => {
+            document.title = route.title || 'react-app'
+            beforeRouter(route)
             if (!route.requireAuth || authed || route.path === authPath) {
-              return <route.component {...props} {...extraProps} route={route} />;
+              return <route.component {...props} {...extraProps} route={route} />
             }
             // eslint-disable-next-line
-            return <Redirect to={{ pathname: authPath, state: { from: props.location } }} />;
+            return <Redirect to={{ pathname: authPath, state: { from: props.location } }} />
           }}
         />
       ))}
     </Switch>
-  ) : null;
+  ) : null
 
-export default renderRoutes;
+export default renderRoutes
