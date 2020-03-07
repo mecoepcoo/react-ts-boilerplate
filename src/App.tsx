@@ -1,14 +1,23 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
-import renderRoutes from '@/utils/renderRouters'
-import { routes, basename } from './router/router'
+import { BrowserRouter as Router, Switch } from 'react-router-dom'
+import { routes } from '@/router/router'
+import { RouteWithSubRoutes } from '@/router/RouteWithSubRoutes'
+import { RouteInterface } from '@/types/route'
 import '@/App.less'
 
 const authed = false
 const authPath = '/login'
 
 const App: React.FC = () => {
-  return <BrowserRouter basename={basename}>{renderRoutes(routes, authed, authPath)}</BrowserRouter>
+  return (
+    <Router>
+      <Switch>
+        {routes.map((route: RouteInterface, i) => {
+          return RouteWithSubRoutes(route, i)
+        })}
+      </Switch>
+    </Router>
+  )
 }
 
 export default App
