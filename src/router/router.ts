@@ -20,6 +20,7 @@ export const routes: RouteInterface[] = [
     exact: true,
     name: 'home',
     title: 'HelloWorld',
+    auth: true,
   },
   {
     path: '/a',
@@ -33,6 +34,7 @@ export const routes: RouteInterface[] = [
         exact: true,
         name: 'demoB',
         title: 'DemoB',
+        auth: true,
       },
     ],
   },

@@ -8,6 +8,7 @@ export interface RouteInterface {
   // strict?: boolean
   title?: string
   name?: string
+  auth?: boolean
 }
 
 export interface RoutesInterface {

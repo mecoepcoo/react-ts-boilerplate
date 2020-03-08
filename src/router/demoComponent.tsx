@@ -1,19 +1,16 @@
+/* 这个demo用于演示子路由，可以删除 */
 import React from 'react'
-import { Switch } from 'react-router-dom'
 import { routeProps } from '@/types/route'
-import { RouteWithSubRoutes } from './RouteWithSubRoutes'
+import { RenderRoutes } from '@/router/RenderRoutes'
 
 export const RouteDemoA = (routeProps: routeProps) => {
   const { routes } = routeProps
   console.log(routeProps)
+  const authed = false
   return routes ? (
     <div>
       <h1>A</h1>
-      <Switch>
-        {routes.map((route: any, i: number) => {
-          return RouteWithSubRoutes(route, i)
-        })}
-      </Switch>
+      {RenderRoutes(routes, authed)}
     </div>
   ) : null
 }
