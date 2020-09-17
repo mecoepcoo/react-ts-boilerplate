@@ -10,7 +10,9 @@ export const routes: RouteInterface[] = [
   {
     path: '/',
     exact: true,
-    component: loadable(() => import('@/pages/demo/HelloWorldDemo/HelloWorldDemoPage')),
+    component: loadable(() =>
+      import(/*  webpackChunkName: "home" */ '@/pages/demo/HelloWorldDemo/HelloWorldDemoPage')
+    ),
     name: 'home',
     title: 'react-home',
   },

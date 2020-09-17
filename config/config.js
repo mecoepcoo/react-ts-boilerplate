@@ -1,3 +1,9 @@
+/*
+ * @Author: Paul-Z-L
+ * @Date: 2020-09-02 09:44:48
+ * @LastEditors: Paul-Z-L
+ * @LastEditTime: 2020-09-02 15:15:19
+ */
 const path = require('path');
 
 module.exports = {
@@ -8,7 +14,7 @@ module.exports = {
   productionJsSourceMap: false,
 
   devServer: {
-    port: 8080,
+    port: 8090,
     host: 'localhost',
     contentBase: path.join(__dirname, '../public'),
     watchContentBase: true,
