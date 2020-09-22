@@ -4,12 +4,22 @@ import { routeProps } from '@/types/route'
 import { RenderRoutes } from '@/router/RenderRoutes'
 
 export const RouteDemoA = (routeProps: routeProps) => {
+  // const list: number[] = [1, 2];
+  const list: Array<number> = [1, 2, 3] // Array<number> 泛型语法
+
+  let value: unknown // 3.0 版本出来的
+
+  let tupleType = [String, Boolean] // Tuple 元祖类型
+
   const { routes } = routeProps
   console.log(routeProps)
-  const authed = false
+  const authed: boolean = false
   return routes ? (
     <div>
       <h1>A</h1>
+      {list.map((item, index) => {
+        return <h2 key={index}>{item}</h2>
+      })}
       {RenderRoutes(routes, authed)}
     </div>
   ) : null
