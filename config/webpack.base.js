@@ -5,14 +5,15 @@ const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require('interpolate-html-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin; // 打包分析
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const config = require('./config');
 const getClientEnvironment = require('./env');
 
 const APP_PATH = path.resolve(__dirname, '../src');
 
-const bundleAnalyzerReport = argv.report;
+const bundleAnalyzerReport = argv.report; // 根据命令参数是否含有 'report' 来决定是否生成报告
+// 运行npm run build，生成的dist目录中会有一个report.html文件，就是我们的分析报告。
 const env = getClientEnvironment(config.publicPath);
 
 const webpackConfig = {

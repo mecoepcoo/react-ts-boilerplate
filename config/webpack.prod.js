@@ -135,7 +135,7 @@ module.exports = merge.smart(baseWebpackConfig, {
       }
     },
     minimizer: [
-      new OptimizeCSSAssetsPlugin({
+      new OptimizeCSSAssetsPlugin({ //  提取css 单独打包
         cssProcessorOptions: true ? { map: { inline: false }} : {}
       }),
       new TerserPlugin({
