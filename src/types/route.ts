@@ -15,4 +15,4 @@ export interface RoutesInterface {
   routes?: RouteInterface[]
 }
 
-export type routeProps = RouteComponentProps<any> & RoutesInterface
+export type RouteProps = RouteComponentProps<any> & RoutesInterface

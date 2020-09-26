@@ -1,9 +1,9 @@
 /* 这个demo用于演示子路由，可以删除 */
 import React from 'react'
-import { routeProps } from '@/types/route'
+import { RouteProps } from '@/types/route'
 import { RenderRoutes } from '@/router/RenderRoutes'
 
-export const RouteDemoA = (routeProps: routeProps) => {
+export const RouteDemoA = (routeProps: RouteProps) => {
   const { routes } = routeProps
   console.log(routeProps)
   const authed = false
@@ -15,6 +15,6 @@ export const RouteDemoA = (routeProps: routeProps) => {
   ) : null
 }
 
-export const RouteDemoB = (props: routeProps) => {
+export const RouteDemoB = (props: RouteProps) => {
   return <h1>B</h1>
 }
