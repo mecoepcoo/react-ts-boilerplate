@@ -11,6 +11,10 @@ export const RouteDemoA = (routeProps: routeProps) => {
 
   let tupleType = [String, Boolean] // Tuple 元祖类型
 
+  // 声明函数返回值为void
+
+  // 类型守护
+
   const { routes } = routeProps
   console.log(routeProps)
   const authed: boolean = false
